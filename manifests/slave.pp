@@ -92,11 +92,12 @@ class jenkins::slave (
   $tool_locations           = undef,
   $install_java             = $jenkins::params::install_java,
   $ensure                   = 'running',
-  $enable                   = true
+  $enable                   = true,
+  $jenkins_repo             = "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/"
 ) inherits jenkins::params {
 
   $client_jar = "swarm-client-${version}-jar-with-dependencies.jar"
-  $client_url = "http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/${version}/"
+  $client_url = sprintf("${jenkins_repo}${version}/")
 
   if $install_java and ($::osfamily != 'Darwin') {
     # Currently the puppetlabs/java module doesn't support installing Java on
